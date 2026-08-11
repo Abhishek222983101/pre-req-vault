@@ -15,6 +15,7 @@ const commitement: Commitment = "confirmed";
 
 describe("pre-req-vault", () => {
   const confirmTx = async (signature: string) => {
+    console.log(`Transaction signature: ${signature}`);
     const latestBlockhash = await anchor
       .getProvider()
       .connection.getLatestBlockhash();
