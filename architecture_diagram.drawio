@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="920" pageHeight="620" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <mxCell id="user" value="&lt;b&gt;User (Signer Wallet)&lt;/b&gt;&lt;br/&gt;· Pays rent &amp;amp; tx fees&lt;br/&gt;· Owns deposited SOL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="40" y="290" width="190" height="100" as="geometry" />
+    </mxCell>
+
+    <mxCell id="vaultState" value="&lt;b&gt;vault_state (PDA)&lt;/b&gt;&lt;br/&gt;seeds: [state, user]&lt;br/&gt;stores: vault_bump, state_bump" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="40" y="40" width="210" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="vault" value="&lt;b&gt;vault (PDA)&lt;/b&gt;&lt;br/&gt;seeds: [vault, vault_state]&lt;br/&gt;Holds deposited SOL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="40" y="150" width="210" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="appAccount" value="&lt;b&gt;application_account (PDA)&lt;/b&gt;&lt;br/&gt;seeds: [prereqs, user]&lt;br/&gt;owner: registration program&lt;br/&gt;stores GitHub username" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+      <mxGeometry x="620" y="70" width="270" height="110" as="geometry" />
+    </mxCell>
+
+    <mxCell id="vaultProg" value="&lt;b&gt;pre_req_vault Program&lt;/b&gt;&lt;br/&gt;4MPh2ZymUjEd6XZqYFNemJF1cBSdUBuNNcnjbTkwRCZx&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Instructions:&lt;/b&gt;&lt;br/&gt;1. initialize&lt;br/&gt;2. deposit&lt;br/&gt;3. withdraw&lt;br/&gt;4. close" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="300" y="150" width="260" height="250" as="geometry" />
+    </mxCell>
+
+    <mxCell id="regProg" value="&lt;b&gt;registration Program (Q3PreReqsRs)&lt;/b&gt;&lt;br/&gt;TRBZyQHB3m68FGeVsqTK39Wm4xejadjVhP5MAZaKWDM&lt;br/&gt;&lt;br/&gt;initialize(github: string)&lt;br/&gt;→ creates ApplicationAccount" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="620" y="330" width="280" height="160" as="geometry" />
+    </mxCell>
+
+    <mxCell id="sys" value="&lt;b&gt;system_program&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+      <mxGeometry x="300" y="470" width="170" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e0" value="calls: initialize / deposit / withdraw / close" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" parent="1" source="user" target="vaultProg">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e1" value="initialize() creates" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" parent="1" source="user" target="vaultState">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e2" value="deposit(amount): SOL user → vault" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" parent="1" source="user" target="vault">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e3" value="withdraw(amount): SOL vault → user (PDA signs)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" parent="1" source="vault" target="user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e4" value="CPI inside withdraw: initialize(github) — records username" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#d79b00;" edge="1" parent="1" source="vaultProg" target="regProg">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e5" value="initialize() creates ApplicationAccount" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" parent="1" source="regProg" target="appAccount">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e6" value="close(): vault_state closed, remaining SOL → user" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" parent="1" source="vaultState" target="user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e7" value="SOL transfers via" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" parent="1" source="vaultProg" target="sys">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>
