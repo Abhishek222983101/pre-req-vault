@@ -9,6 +9,9 @@ skip-lint = false
 [programs.localnet]
 pre_req_vault = "DBoobRVqT7PaAhq8obqo95723CHyWvcCLRUKvQ5wYWE4"
 
+[programs.devnet]
+pre_req_vault = "4MPh2ZymUjEd6XZqYFNemJF1cBSdUBuNNcnjbTkwRCZx"
+
 [provider]
 cluster = "devnet"
 wallet = "~/.config/solana/id.json"
